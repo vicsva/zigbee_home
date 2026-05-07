@@ -156,4 +156,5 @@ jobs:
           path: |
             examples/${{ matrix.examples }}/**/*.hex
             examples/${{ matrix.examples }}/**/*.bin
+            examples/${{ matrix.examples }}/*.uf2
           
