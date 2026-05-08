@@ -147,17 +147,7 @@ jobs:
           export ZEPHYR_BASE=~/ncs/zigbee_sdk_${ZIGBEE_ADD_ON_VERSION}/zephyr
           echo "Set ZEPHYR_BASE at ${ZEPHYR_BASE}."
 
-          # 1. Основная сборка прошивки
           ./nrfutil toolchain-manager launch --ncs-version ${TOOLCHAIN_VERSION} -- bash -c './zigbee_home firmware --workdir ./examples/${{ matrix.examples }} build --config ./examples/${{ matrix.examples }}/zigbee.yaml'
-          
-          # 2. Прямое скачивание конвертера (чтобы не зависеть от капризов pip)
-          wget https://raw.githubusercontent.com/microsoft/uf2/master/utils/uf2conv.py
-          
-          # 3. Конвертация HEX в UF2
-          python3 uf2conv.py ./examples/${{ matrix.examples }}/build/zephyr/zephyr.hex -c -f 0xada52840 -o ./examples/${{ matrix.examples }}/firmware.uf2
-          
-          # Конвертация в UF2
-          python3 -m uf2tool.uf2conv ./examples/${{ matrix.examples }}/build/zephyr/zephyr.hex -c -f 0xada52840 -o ./examples/${{ matrix.examples }}/firmware.uf2
           
       - name: Upload firmware
         uses: actions/upload-artifact@v4
@@ -166,5 +156,4 @@ jobs:
           path: |
             examples/${{ matrix.examples }}/**/*.hex
             examples/${{ matrix.examples }}/**/*.bin
-            examples/${{ matrix.examples }}/*.uf2
           
