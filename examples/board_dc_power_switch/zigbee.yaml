@@ -2,6 +2,7 @@ general:
   board: xiao_ble/nrf52840
 
 board:
+  factory_reset_button: button1
   # Set board to be router so it will always be available
   # to receive commands (i.e. switch power).
   is_router: true
